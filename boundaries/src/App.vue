@@ -3,35 +3,43 @@
     <div id="nav" class="wrapper flex-col flex-col--align-center">
       <h1 class="flex-col--2">Boundaries</h1>
       <router-link to="/">Home</router-link>
-      <router-link :to="{ name: 'gender-overview', params: { gender: 'women'}}" class="nav-items__item">Women</router-link>
-      <router-link :to="{ name: 'gender-overview', params: { gender: 'men'}}" class="nav-items__item">Men</router-link>
-      <router-link to="/cart" class="nav-items__item">Cart<counter-badge :count="cartCount"></counter-badge></router-link>
+      <router-link
+        :to="{ name: 'gender-overview', params: { gender: 'women' } }"
+        class="nav-items__item"
+        >Women</router-link
+      >
+      <router-link
+        :to="{ name: 'gender-overview', params: { gender: 'men' } }"
+        class="nav-items__item"
+        >Men</router-link
+      >
+      <router-link to="/cart" class="nav-items__item"
+        >Cart<counter-badge :count="cartCount"></counter-badge
+      ></router-link>
     </div>
     <router-view />
   </div>
 </template>
 
 <script>
-import CounterBadge from '@/components/CounterBadge';
+import CounterBadge from "@/components/CounterBadge";
 
 export default {
-  name: 'app',
+  name: "app",
   components: { CounterBadge },
   computed: {
     cartCount() {
-      return this.$store.state.cart.length
+      return this.$store.state.cart.length;
     }
   }
-
-}
-
+};
 </script>
 <style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-   color: #2c3e50;
+  color: #2c3e50;
 }
 
 #nav {

@@ -6,8 +6,9 @@
         <li
           v-for="item in cartItems"
           :key="item.id"
-          class="flex-col cart-list__item">
-          <img :src="makeImagePath(item)" class="thumbnail" alt="">
+          class="flex-col cart-list__item"
+        >
+          <img :src="makeImagePath(item)" class="thumbnail" alt="" />
           <div class="flex-col cart-list__item__details">
             <div>
               <p>{{ item.name }}</p>
@@ -17,7 +18,8 @@
             <p>${{ item.price }}</p>
             <button
               @click="removeFromCart(item.id)"
-              class="btn cart-list__btn-remove">
+              class="btn cart-list__btn-remove"
+            >
               Remove
             </button>
           </div>
@@ -28,7 +30,7 @@
           <li class="total-section__item">
             <p class="total-section__item__label">{{ cartItemsCount }} items</p>
             <p>{{ itemsSubtotal }}</p>
-            </li>
+          </li>
           <li class="total-section__item">
             <p class="total-section__item__label">Shipping</p>
             <select v-model="selectedShippingOption">
@@ -36,7 +38,8 @@
               <option
                 v-for="option in shippingOptionsArray"
                 :key="option.text"
-                :value="option.rate">
+                :value="option.rate"
+              >
                 {{ option.text }} (${{ option.rate }})
               </option>
             </select>
@@ -46,7 +49,9 @@
             <p>{{ subtotal }}</p>
           </li>
           <li class="total-section__item">
-            <p class="total-section__item__label">Tax ({{ salesTaxPercentage }})</p>
+            <p class="total-section__item__label">
+              Tax ({{ salesTaxPercentage }})
+            </p>
             <p>{{ salesTaxApplied }}</p>
           </li>
           <li class="total-section__item">
@@ -56,8 +61,9 @@
         </ul>
         <button
           :disabled="!this.selectedShippingOption"
-          class="btn btn--grey total-section__checkout-button">
-            Check out
+          class="btn btn--grey total-section__checkout-button"
+        >
+          Check out
         </button>
       </section>
     </div>
@@ -65,32 +71,32 @@
 </template>
 
 <script>
-import { imagePath } from '@/mixins/imagePath';
+import { imagePath } from "@/mixins/imagePath";
 export default {
-  name: 'cart',
+  name: "cart",
   mixins: [imagePath],
   data() {
     return {
       salesTax: 0.06,
-      selectedShippingOption: '',
+      selectedShippingOption: "",
       shippingOptionsArray: [
         {
-          text: 'One day',
-          rate: 20,
+          text: "One day",
+          rate: 20
         },
         {
-          text: 'Two days',
-          rate: 15,
+          text: "Two days",
+          rate: 15
         },
         {
-          text: 'Three to five days',
-          rate: 10,
+          text: "Three to five days",
+          rate: 10
         },
         {
-          text: 'One week or more',
-          rate: 5,
-        },
-      ],
+          text: "One week or more",
+          rate: 5
+        }
+      ]
     };
   },
   computed: {
@@ -107,7 +113,7 @@ export default {
       if (this.selectedShippingOption && this.cartItemsCount > 0) {
         return Number(this.itemsSubtotal) + Number(this.selectedShippingOption);
       }
-      return '---';
+      return "---";
     },
     salesTaxPercentage() {
       return `${this.salesTax * 100}%`;
@@ -116,20 +122,20 @@ export default {
       if (this.selectedShippingOption && this.cartItemsCount > 0) {
         return (this.subtotal * this.salesTax).toFixed(2);
       }
-      return '---';
+      return "---";
     },
     total() {
       if (this.selectedShippingOption && this.cartItemsCount > 0) {
         return Number(this.subtotal) + Number(this.salesTaxApplied);
       }
-      return '---';
+      return "---";
     }
   },
   methods: {
     removeFromCart(itemId) {
-      this.$store.dispatch('removeFromCart', itemId);
-    },
-  },
+      this.$store.dispatch("removeFromCart", itemId);
+    }
+  }
 };
 </script>
 
@@ -151,17 +157,17 @@ export default {
   margin-left: 2rem;
 }
 .cart-list__btn-remove {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   &:hover {
     color: red;
   }
 }
 .thumbnail {
   max-width: 50px;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 .total-section {
-  background: #FAFAFA;
+  background: #fafafa;
   padding: 0 1rem 1rem;
 }
 .total-section-list {

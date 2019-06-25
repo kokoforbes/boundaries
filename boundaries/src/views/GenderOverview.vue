@@ -2,88 +2,123 @@
   <div>
     <h1 class="wrapper">{{ pageTitle }}</h1>
     <ul class="wrapper item-grid">
-        <li v-for="product in productsByGender" :key="product.id" class="item-grid__item">
-          <router-link :to="{ name: 'product', params: { id: product.id}}">
-            <img class="product-image" :src="makeImagePath(product)" alt="">
-            <p class="product-title">{{ product.name }}</p>
-            <p><em>${{ product.price }}</em></p>
-          </router-link>
-        </li>
-      </ul>
-      <div class="wrapper random-items-wrapper">
-        <h2>Our Recommendations</h2>
-        <p>Try these on for size!</p>
-        <section class="random-items">
-          <router-link :to="{ name: 'product', params: { id: randomTop.id}}" class="random-items__item">
-            <img class="product-image" :src="makeImagePath(randomTop)" alt="">
-            <p class="product-title">{{ randomTop.name }}</p>
-            <p><em>${{ randomTop.price }}</em></p>
-          </router-link>
-          <router-link :to="{ name: 'product', params: { id: randomBottom.id}}" class="random-items__item">
-            <img class="product-image" :src="makeImagePath(randomBottom)" alt="">
-            <p class="product-title">{{ randomBottom.name }}</p>
-            <p><em>${{ randomBottom.price }}</em></p>
-          </router-link>
-          <router-link :to="{ name: 'product', params: { id: randomFootwear.id}}" class="random-items__item">
-            <img class="product-image" :src="makeImagePath(randomFootwear)" alt="">
-            <p class="product-title">{{ randomFootwear.name }}</p>
-            <p><em>${{ randomFootwear.price }}</em></p>
-          </router-link>
-        </section>
-        <button class="btn btn--grey" @click="recommendRandomOutfit">Shuffle</button>
-      </div>
+      <li
+        v-for="product in productsByGender"
+        :key="product.id"
+        class="item-grid__item"
+      >
+        <router-link :to="{ name: 'product', params: { id: product.id } }">
+          <img class="product-image" :src="makeImagePath(product)" alt="" />
+          <p class="product-title">{{ product.name }}</p>
+          <p>
+            <em>${{ product.price }}</em>
+          </p>
+        </router-link>
+      </li>
+    </ul>
+    <div class="wrapper random-items-wrapper">
+      <h2>Our Recommendations</h2>
+      <p>Try these on for size!</p>
+      <section class="random-items">
+        <router-link
+          :to="{ name: 'product', params: { id: randomTop.id } }"
+          class="random-items__item"
+        >
+          <img class="product-image" :src="makeImagePath(randomTop)" alt="" />
+          <p class="product-title">{{ randomTop.name }}</p>
+          <p>
+            <em>${{ randomTop.price }}</em>
+          </p>
+        </router-link>
+        <router-link
+          :to="{ name: 'product', params: { id: randomBottom.id } }"
+          class="random-items__item"
+        >
+          <img
+            class="product-image"
+            :src="makeImagePath(randomBottom)"
+            alt=""
+          />
+          <p class="product-title">{{ randomBottom.name }}</p>
+          <p>
+            <em>${{ randomBottom.price }}</em>
+          </p>
+        </router-link>
+        <router-link
+          :to="{ name: 'product', params: { id: randomFootwear.id } }"
+          class="random-items__item"
+        >
+          <img
+            class="product-image"
+            :src="makeImagePath(randomFootwear)"
+            alt=""
+          />
+          <p class="product-title">{{ randomFootwear.name }}</p>
+          <p>
+            <em>${{ randomFootwear.price }}</em>
+          </p>
+        </router-link>
+      </section>
+      <button class="btn btn--grey" @click="recommendRandomOutfit">
+        Shuffle
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
-import { imagePath } from '@/mixins/imagePath.js'
-import { all } from 'q';
+import { imagePath } from "@/mixins/imagePath.js";
+import { all } from "q";
 export default {
   name: "genderOverview",
-  mixins: [ imagePath ],
+  mixins: [imagePath],
   created() {
-    this.recommendRandomOutfit()
+    this.recommendRandomOutfit();
   },
-  data () {
+  data() {
     return {
       randomTopId: null,
       randomBottomId: null,
       randomFootwearId: null
-    }
+    };
   },
   computed: {
     gender() {
-      return this.$route.params.gender
+      return this.$route.params.gender;
     },
     pageTitle() {
-        return `${this.gender[0].toUpperCase()}${this.gender.slice(1)}`
+      return `${this.gender[0].toUpperCase()}${this.gender.slice(1)}`;
     },
     productsByGender() {
-      return this.$store.getters.productsByGender(this.gender).slice(0, 6)
+      return this.$store.getters.productsByGender(this.gender).slice(0, 6);
     },
     randomTop() {
-      return this.$store.getters.product(this.randomTopId)
+      return this.$store.getters.product(this.randomTopId);
     },
     randomBottom() {
-      return this.$store.getters.product(this.randomBottomId)
+      return this.$store.getters.product(this.randomBottomId);
     },
     randomFootwear() {
-      return this.$store.getters.product(this.randomFootwearId)
+      return this.$store.getters.product(this.randomFootwearId);
     }
   },
   methods: {
     randomProductIdByCategory(category) {
-      let allProductsInCategory = this.productsByGender.filter(p => p.category === category);
-      let randomIndex = Math.floor(Math.random() * allProductsInCategory.length);
+      let allProductsInCategory = this.productsByGender.filter(
+        p => p.category === category
+      );
+      let randomIndex = Math.floor(
+        Math.random() * allProductsInCategory.length
+      );
       return allProductsInCategory[randomIndex].id;
     },
     recommendRandomOutfit() {
-      this.randomTopId = this.randomProductIdByCategory('Shirts')
-      this.randomBottomId = this.randomProductIdByCategory('Pants')
-      this.randomFootwearId = this.randomProductIdByCategory('Shoes')
+      this.randomTopId = this.randomProductIdByCategory("Shirts");
+      this.randomBottomId = this.randomProductIdByCategory("Pants");
+      this.randomFootwearId = this.randomProductIdByCategory("Shoes");
     }
   }
-}
+};
 </script>
 
 <style lang="scss">

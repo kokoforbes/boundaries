@@ -4,19 +4,14 @@
   </span>
 </template>
 
-
-
 <script>
-
 export default {
-  name: 'counter-badge',
-  props: ['count'],
-}
-
+  name: "counter-badge",
+  props: ["count"]
+};
 </script>
 
 <style>
-
 .badge {
   position: absolute;
   /* top: -.5rem;
@@ -28,9 +23,8 @@ export default {
   width: 20px;
   border-radius: 20px;
   background-color: #42b983;
-  color: #FFF;
+  color: #fff;
   font-weight: bold;
   font-size: 12px;
 }
-
 </style>
